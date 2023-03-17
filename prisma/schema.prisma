@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Message {
+  author    String
+  content   String
+  chatName  String
+  createdAt DateTime @default(now())
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+}
+
+model Rewind {
+  authors  String[]
+  messages String[]
+  id       String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+}
