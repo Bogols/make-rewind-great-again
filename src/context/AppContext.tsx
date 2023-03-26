@@ -7,10 +7,12 @@ import {
   useState,
 } from "react";
 import { type FormValues } from "~/components/PasteForm";
+import { hasCookie } from "cookies-next";
 
 interface IAppContext {
   rewind: FormValues[];
   setRewind: Dispatch<SetStateAction<FormValues[]>>;
+  isLoggedIn: boolean;
 }
 
 function createCtx<ContextType extends object | null>() {
@@ -28,8 +30,9 @@ export const [useAppContext, AppContextProvider] = createCtx<IAppContext>();
 
 function ContextProvider({ children }: { children: ReactNode }) {
   const [rewind, setRewind] = useState<FormValues[]>([]);
+  const isLoggedIn = hasCookie("userID");
 
-  const value = { rewind, setRewind };
+  const value = { rewind, setRewind, isLoggedIn };
 
   return <AppContextProvider value={value}>{children}</AppContextProvider>;
 }
